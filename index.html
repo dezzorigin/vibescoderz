@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DragonFocus 🐉 — Conquer Your Tasks</title>
+  <meta name="description" content="DragonFocus — Pomodoro Timer & Quest Board bertema naga di luar angkasa. Fokus seperti naga kosmik!" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== STAR FIELD CANVAS (background) ===== -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== NEBULA BLOBS ===== -->
+  <div class="nebula nebula-1" aria-hidden="true"></div>
+  <div class="nebula nebula-2" aria-hidden="true"></div>
+  <div class="nebula nebula-3" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="header-logo">
+      <!-- Inline SVG dragon silhouette logo -->
+      <svg class="logo-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 36 C8 36 4 28 8 20 C12 12 20 10 24 8 C28 6 34 6 38 10 C42 14 42 20 40 26 C38 32 32 38 28 40 C24 42 18 42 14 40 C10 38 8 36 8 36Z" fill="url(#dragonGrad)" opacity="0.9"/>
+        <path d="M24 8 C22 4 18 2 14 4 C10 6 12 12 16 12" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M28 10 C32 6 38 4 40 8 C42 12 38 16 34 14" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M36 28 C40 30 44 34 42 38 C40 42 36 40 34 38" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="20" cy="22" r="2" fill="#06B6D4"/>
+        <circle cx="28" cy="20" r="2" fill="#06B6D4"/>
+        <path d="M18 30 C20 32 24 33 26 32 C28 31 30 28 30 28" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M30 28 C34 30 36 28 38 30" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+        <defs>
+          <linearGradient id="dragonGrad" x1="4" y1="8" x2="44" y2="44">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="50%" stop-color="#A855F7"/>
+            <stop offset="100%" stop-color="#06B6D4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">DragonFocus</span>
+    </div>
+    <div class="header-greeting" id="header-greeting">⚡ Siap bertarung, pejuang kosmik!</div>
+    <div class="header-actions">
+      <button class="icon-btn" id="ambient-toggle-btn" title="Space Sounds" aria-label="Toggle ambient sound">
+        <i class="ph-bold ph-music-notes"></i>
+      </button>
+      <button class="icon-btn" id="settings-btn" title="Pengaturan" aria-label="Buka pengaturan">
+        <i class="ph-bold ph-gear"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="app-main">
+
+    <!-- ===== LEFT COLUMN: TIMER ===== -->
+    <section class="card timer-card" id="timer-card" aria-label="Pomodoro Timer">
+
+      <!-- Mode Tabs -->
+      <div class="timer-mode-tabs" role="tablist" aria-label="Timer mode">
+        <button class="mode-tab active" id="tab-focus" role="tab" aria-selected="true" data-mode="focus">
+          <i class="ph-bold ph-flame"></i> Focus
+        </button>
+        <button class="mode-tab" id="tab-short" role="tab" aria-selected="false" data-mode="short">
+          <i class="ph-bold ph-lightning"></i> Break
+        </button>
+        <button class="mode-tab" id="tab-long" role="tab" aria-selected="false" data-mode="long">
+          <i class="ph-bold ph-moon-stars"></i> Deep Rest
+        </button>
+      </div>
+
+      <!-- Dragon Mascot -->
+      <div class="mascot-area" aria-live="polite" aria-label="Dragon mascot status">
+        <div class="mascot" id="mascot">
+          <div class="mascot-img-wrapper" id="mascot-img-wrapper">
+            <img
+              src="dragon.png"
+              alt="Dragon mascot"
+              class="mascot-img"
+              id="mascot-img"
+              draggable="false"
+            />
+            <!-- State overlay (glow ring changes color per state) -->
+            <div class="mascot-glow-ring" id="mascot-glow-ring"></div>
+          </div>
+          <div class="mascot-bubble" id="mascot-bubble">Siap bertarung bersamamu!</div>
+        </div>
+      </div>
+
+      <!-- Timer Display -->
+      <div class="timer-display-wrapper">
+        <div class="timer-display" id="timer-display" aria-live="polite" aria-label="Timer countdown">
+          <span id="timer-minutes">25</span><span class="timer-colon">:</span><span id="timer-seconds">00</span>
+        </div>
+        <!-- Progress Bar -->
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Timer progress">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+          <div class="progress-bar-glow" id="progress-bar-glow"></div>
+        </div>
+      </div>
+
+      <!-- Session Indicators -->
+      <div class="session-indicators" aria-label="Sesi selesai" aria-live="polite">
+        <div class="session-dot" id="sess-1">
+          <!-- flame SVG icon -->
+          <svg viewBox="0 0 24 24" class="sess-icon" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="currentColor" opacity="0.3"/></svg>
+        </div>
+        <div class="session-dot" id="sess-2">
+          <svg viewBox="0 0 24 24" class="sess-icon" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="currentColor" opacity="0.3"/></svg>
+        </div>
+        <div class="session-dot" id="sess-3">
+          <svg viewBox="0 0 24 24" class="sess-icon" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="currentColor" opacity="0.3"/></svg>
+        </div>
+        <div class="session-dot" id="sess-4">
+          <svg viewBox="0 0 24 24" class="sess-icon" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="currentColor" opacity="0.3"/></svg>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="timer-controls">
+        <button class="btn btn-ghost btn-icon-only" id="reset-btn" title="Reset" aria-label="Reset timer">
+          <i class="ph-bold ph-arrow-counter-clockwise"></i>
+        </button>
+        <button class="btn btn-primary btn-start" id="start-pause-btn" aria-label="Mulai timer">
+          <i class="ph-bold ph-play" id="play-icon"></i>
+          <span id="start-pause-text">Start</span>
+        </button>
+        <button class="btn btn-ghost btn-icon-only" id="skip-btn" title="Lewati" aria-label="Lewati ke sesi berikutnya">
+          <i class="ph-bold ph-skip-forward"></i>
+        </button>
+      </div>
+
+      <!-- Active Task Display -->
+      <div class="active-task-display" id="active-task-display" aria-live="polite">
+        <p class="active-task-label">
+          <i class="ph-bold ph-crosshair-simple"></i> Quest Aktif
+        </p>
+        <p class="active-task-name" id="active-task-name">Pilih quest dari papan →</p>
+      </div>
+
+    </section>
+
+    <!-- ===== RIGHT COLUMN: QUEST BOARD ===== -->
+    <section class="card todo-card" id="todo-card" aria-label="Quest Board">
+
+      <div class="todo-header">
+        <h2 class="todo-title">
+          <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3L14.5 8.5H20.5L15.5 12L17.5 18L12 14.5L6.5 18L8.5 12L3.5 8.5H9.5L12 3Z" fill="url(#starGrad)" stroke="none"/>
+            <defs><linearGradient id="starGrad" x1="3" y1="3" x2="21" y2="18"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FF6B35"/></linearGradient></defs>
+          </svg>
+          Quest Board
+        </h2>
+        <span class="todo-count" id="todo-count">0 quest</span>
+      </div>
+
+      <!-- Add Task Form -->
+      <div class="add-task-form">
+        <div class="add-task-input-wrapper">
+          <i class="ph-bold ph-plus-circle input-prefix-icon"></i>
+          <input
+            type="text"
+            id="task-input"
+            class="task-input"
+            placeholder="Tambah quest baru..."
+            aria-label="Tambah quest baru"
+            maxlength="80"
+            autocomplete="off"
+          />
+        </div>
+        <div class="add-task-meta">
+          <select id="task-category" class="task-select" aria-label="Kategori quest">
+            <option value="kuliah">📚 Kuliah</option>
+            <option value="kerja">⚔️ Misi</option>
+            <option value="pribadi">🌌 Personal</option>
+            <option value="lainnya">🔮 Lainnya</option>
+          </select>
+          <div class="pomodoro-estimate">
+            <svg class="flame-icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="#FF6B35"/></svg>
+            <input type="number" id="task-pomodoro" class="pomodoro-input" min="1" max="20" value="1" aria-label="Estimasi jumlah sesi" />
+          </div>
+          <button class="btn btn-primary btn-add" id="add-task-btn" aria-label="Tambah quest">
+            Tambah
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter quest">
+        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">Semua</button>
+        <button class="filter-tab" data-filter="active" role="tab" aria-selected="false">Aktif</button>
+        <button class="filter-tab" data-filter="done" role="tab" aria-selected="false">Selesai</button>
+      </div>
+
+      <!-- Task List -->
+      <ul class="task-list" id="task-list" aria-label="Daftar quest" role="list"></ul>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" hidden>
+        <svg class="empty-dragon-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="40" cy="40" r="38" fill="rgba(124,58,237,0.1)" stroke="rgba(124,58,237,0.2)" stroke-width="1.5"/>
+          <text x="40" y="52" text-anchor="middle" font-size="32">🐉</text>
+        </svg>
+        <p>Tidak ada quest di sini~</p>
+        <p class="empty-sub">Tambahkan quest baru di atas!</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="todo-footer">
+        <button class="text-btn danger-btn" id="clear-done-btn" aria-label="Hapus semua quest selesai">
+          <i class="ph-bold ph-trash"></i> Hapus yang selesai
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ===== SETTINGS MODAL ===== -->
+  <div class="modal-overlay" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="settings-title" class="modal-title">
+          <i class="ph-bold ph-gear-six"></i> Pengaturan
+        </h2>
+        <button class="icon-btn modal-close-btn" id="close-settings-btn" aria-label="Tutup pengaturan">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label class="settings-label">
+            <svg class="flame-icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="#FF6B35"/></svg>
+            Focus Time (menit)
+          </label>
+          <div class="settings-number-input">
+            <button class="num-btn" data-target="settings-focus" data-action="dec" aria-label="Kurangi">−</button>
+            <input type="number" id="settings-focus" class="num-input" min="1" max="60" value="25" aria-label="Durasi fokus" />
+            <button class="num-btn" data-target="settings-focus" data-action="inc" aria-label="Tambah">+</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label"><i class="ph-bold ph-lightning" style="color:#FFD700"></i> Short Break (menit)</label>
+          <div class="settings-number-input">
+            <button class="num-btn" data-target="settings-short" data-action="dec" aria-label="Kurangi">−</button>
+            <input type="number" id="settings-short" class="num-input" min="1" max="30" value="5" aria-label="Durasi istirahat pendek" />
+            <button class="num-btn" data-target="settings-short" data-action="inc" aria-label="Tambah">+</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label class="settings-label"><i class="ph-bold ph-moon-stars" style="color:#A855F7"></i> Long Break (menit)</label>
+          <div class="settings-number-input">
+            <button class="num-btn" data-target="settings-long" data-action="dec" aria-label="Kurangi">−</button>
+            <input type="number" id="settings-long" class="num-input" min="1" max="60" value="15" aria-label="Durasi istirahat panjang" />
+            <button class="num-btn" data-target="settings-long" data-action="inc" aria-label="Tambah">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="save-settings-btn">
+          <i class="ph-bold ph-floppy-disk"></i> Simpan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== AMBIENT PANEL ===== -->
+  <div class="ambient-panel" id="ambient-panel" hidden role="dialog" aria-label="Space Sounds">
+    <div class="ambient-header">
+      <span class="ambient-title"><i class="ph-bold ph-planet"></i> Space Sounds</span>
+      <button class="icon-btn" id="close-ambient-btn" aria-label="Tutup panel suara">
+        <i class="ph-bold ph-x"></i>
+      </button>
+    </div>
+    <div class="ambient-options">
+      <button class="ambient-btn" data-sound="dragonlair" aria-label="Dragon Lair">🐉 Dragon Lair</button>
+      <button class="ambient-btn" data-sound="spacevoid" aria-label="Space Void">🌌 Space Void</button>
+      <button class="ambient-btn" data-sound="volcano" aria-label="Volcano">🌋 Volcano</button>
+      <button class="ambient-btn" data-sound="nebula" aria-label="Nebula">💫 Nebula</button>
+    </div>
+    <div class="ambient-volume">
+      <i class="ph-bold ph-speaker-low"></i>
+      <input type="range" id="ambient-volume" min="0" max="1" step="0.1" value="0.5" class="volume-slider" aria-label="Volume" />
+      <i class="ph-bold ph-speaker-high"></i>
+    </div>
+    <p class="ambient-note">* Procedural Web Audio API</p>
+  </div>
+
+  <!-- ===== FIRE PARTICLE CANVAS (confetti replacement) ===== -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
