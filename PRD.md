@@ -5,16 +5,15 @@
 | Field | Nilai |
 |---|---|
 | Nama Proyek | Vibescoderz |
-| Repo | dezzorigin/vibescoderz |
-| Tech Stack | Next.js 14 |
-| Status | Dalam pengembangan |
+| Tech Stack | Next.js |
+| Status | Hampir selesai (beta) |
 | Penanggung Jawab | Nabil Aulia Dika |
 | Versi Dokumen | 1.0 |
 | Tanggal | 2026 |
 
 ## 2. Latar Belakang
 
-Proyek ini dikembangkan sebagai bagian dari portofolio dan kebutuhan operasional. Dokumen ini mengikuti standar PRD nasional untuk memastikan ruang lingkup, fitur, dan kriteria keberhasilan terdefinisi dengan jelas.
+Proyek ini dikembangkan sebagai bagian dari portofolio dan kebutuhan operasional. Dokumen ini mengikuti standar PRD nasional agar ruang lingkup, fitur, dan kriteria keberhasilan terdefinisi dengan jelas.
 
 ## 3. Masalah yang Diselesaikan
 
@@ -40,12 +39,12 @@ Pengguna membutuhkan solusi digital yang efisien, terukur, dan mudah dipelihara 
 ## 6. Fitur & Persyaratan Fungsional
 
 Struktur proyek (file/direktori utama):
-- .gitignore
 - AGENTS.md
 - ATTACK-CLASSES.md
 - AuthGuard.tsx
 - DESIGN.MD
 - FaqAccordion.tsx
+- LICENSE
 - LoginClient.tsx
 - Logo Area Desain.png
 - Logo Barika.png
@@ -58,28 +57,8 @@ Struktur proyek (file/direktori utama):
 - Logo_Nightcoders.png
 - Logo_Startup_Banda_Aceh_Community.png
 - PRD.MD
+- PRD.md
 - README.md
-- SKILL.md
-- SignaturePad.tsx
-- SignupClient.tsx
-- SiteNav.tsx
-- ThemeToggle.tsx
-- animated-group.tsx
-- app.js
-- button.tsx
-- card.tsx
-- components.json
-- dragon.png
-- eslint.config.mjs
-- file.svg
-- globals.css
-- globe.svg
-- hero-section-1.tsx
-- index.html
-- input.tsx
-- instrumentation-client.ts
-- logo.png
-- next.svg
 
 ## 7. Persyaratan Non-Fungsional
 
@@ -90,7 +69,7 @@ Struktur proyek (file/direktori utama):
 
 ## 8. Arsitektur & Tech Stack
 
-Next.js 14
+Next.js
 
 ## 9. Milestone / Roadmap
 
