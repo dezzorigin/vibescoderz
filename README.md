@@ -1,24 +1,34 @@
 # Vibescoderz
 
-Vibescoderz — project by Nabil Aulia Dika (dezzorigin).
+Vibescoderz — project oleh Nabil Aulia Dika (dezzorigin).
 
 ## Status Proyek
 
-**Dalam pengembangan** _(README ada)_
+**Hampir selesai (beta)** _(README ada, build artifact ada)_
 
-## Tech Stack
+## 📋 Tech Stack
 
-Next.js 14
+Next.js
 
-## Struktur Proyek
+## 🏗️ Arsitektur
+
+```mermaid
+flowchart LR
+  U[Pengguna] --> B[Browser]
+  B --> F[Frontend (React/Next.js)]
+  F --> A[API Routes]
+  A --> D[(Database)]
+```
+
+## 📁 Struktur Proyek
 
 ```
-.gitignore
 AGENTS.md
 ATTACK-CLASSES.md
 AuthGuard.tsx
 DESIGN.MD
 FaqAccordion.tsx
+LICENSE
 LoginClient.tsx
 Logo Area Desain.png
 Logo Barika.png
@@ -31,60 +41,30 @@ Logo_Eggeek.png
 Logo_Nightcoders.png
 Logo_Startup_Banda_Aceh_Community.png
 PRD.MD
+PRD.md
 README.md
 SKILL.md
 SignaturePad.tsx
 SignupClient.tsx
 SiteNav.tsx
 ThemeToggle.tsx
-animated-group.tsx
-app.js
-button.tsx
-card.tsx
-components.json
-dragon.png
-eslint.config.mjs
-file.svg
-globals.css
-globe.svg
-hero-section-1.tsx
-index.html
-input.tsx
-instrumentation-client.ts
-logo.png
-next.svg
-notifications.ts
-package.json
-packages.ts
-page.tsx
-redesign-existing-projects
-route.ts
-schema.sql
-security.txt
-sentry.edge.config.ts
-style.css
-supabase-admin.ts
-supabase-server.ts
-supabase.ts
-switch.tsx
-toast.tsx
-types.ts
-useAuth.ts
-utils.ts
-vecel.json
-vercel.json
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ```bash
+# Install dependencies
 npm install
+
+# Jalankan development server
 npm run dev
 ```
 
-## Lisensi
+> Untuk project HTML/Python/Go, lihat instruksi di atas atau file konfigurasi.
 
-MIT — lihat file [LICENSE](./LICENSE).
+## 📄 Lisensi
+
+MIT — lihat [LICENSE](./LICENSE).
 
 ---
-_Dibuat dan dikelola oleh Nabil Aulia Dika. Kontribusi dan issue welcome._
+_Dikembangkan oleh **dezzorigin** (Nabil Aulia Dika)._
