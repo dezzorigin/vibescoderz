@@ -1,70 +1,75 @@
-# Vibescoderz
+# DragonFocus 🐉
 
-Vibescoderz — project oleh Nabil Aulia Dika (dezzorigin).
+**DragonFocus** adalah aplikasi produktivitas bertema naga luar angkasa yang menggabungkan **Pomodoro Timer** dengan **Quest Board** (papan tugas). Dibuat murni dengan HTML, CSS, dan JavaScript — tanpa framework, tanpa backend, dan bisa dijalankan sepenuhnya offline.
 
-## Status Proyek
+## 🌐 Live Demo
 
-**Hampir selesai (beta)** _(README ada, build artifact ada)_
+**https://vibescoderz.pages.dev**
 
-## 📋 Tech Stack
+## ✨ Fitur
 
-Next.js
+- **Pomodoro Timer** — sesi fokus, istirahat pendek, dan istirahat panjang yang bisa dikonfigurasi.
+- **Quest Board** — tambah, tandai selesai, dan hapus tugas harian.
+- **Active Task** — pilih satu tugas sebagai fokus utama saat sesi berjalan.
+- **Mascot Naga** — maskot animasi yang memberi semangat sesuai kondisi sesi.
+- **Ambient Sound** — suara latar (hujan/api) dengan pengatur volume, dibuat lewat Web Audio API.
+- **Progress Bar** — visualisasi progres sesi fokus.
+- **Penyimpanan Lokal** — tugas dan pengaturan disimpan di `localStorage` (tidak perlu akun).
+- **Responsif** — nyaman dipakai di desktop maupun ponsel.
 
 ## 🏗️ Arsitektur
 
 ```mermaid
 flowchart LR
   U[Pengguna] --> B[Browser]
-  B --> F[Frontend (React/Next.js)]
-  F --> A[API Routes]
-  A --> D[(Database)]
+  B --> UI[index.html + style.css]
+  UI --> JS[app.js]
+  JS --> LS[(localStorage)]
+  JS --> WA[Web Audio API]
 ```
+
+Aplikasi ini sepenuhnya client-side (static site). Tidak ada API route, database, atau server-side rendering.
 
 ## 📁 Struktur Proyek
 
 ```
-AGENTS.md
-ATTACK-CLASSES.md
-AuthGuard.tsx
-DESIGN.MD
-FaqAccordion.tsx
-LICENSE
-LoginClient.tsx
-Logo Area Desain.png
-Logo Barika.png
-Logo Eggeek.png
-Logo Nightcoders.png
-Logo Startup Banda Aceh Community.png
-Logo_Area_Desain.png
-Logo_Barika.png
-Logo_Eggeek.png
-Logo_Nightcoders.png
-Logo_Startup_Banda_Aceh_Community.png
-PRD.MD
-PRD.md
-README.md
-SKILL.md
-SignaturePad.tsx
-SignupClient.tsx
-SiteNav.tsx
-ThemeToggle.tsx
+index.html   # Markup utama aplikasi
+style.css    # Tema "Dragon in Space", animasi, dan layout responsif
+app.js       # Logika timer, quest board, ambient sound, maskot
+dragon.png   # Aset maskot naga
+dist/        # Hasil build statis untuk deployment (di-generate, tidak di-commit)
 ```
 
-## 🚀 Getting Started
+> Catatan: file `.tsx` dan konfigurasi Next.js di repo ini adalah sisa eksperimen
+> sebelumnya. Aplikasi yang berjalan dan di-deploy adalah versi statis
+> `index.html` + `style.css` + `app.js`.
+
+## 🚀 Menjalankan Secara Lokal
 
 ```bash
-# Install dependencies
-npm install
+# Opsi 1: buka langsung
+xdg-open index.html   # Linux
+open index.html       # macOS
 
-# Jalankan development server
-npm run dev
+# Opsi 2: jalankan static server
+python3 -m http.server 8080
+# lalu buka http://localhost:8080
 ```
 
-> Untuk project HTML/Python/Go, lihat instruksi di atas atau file konfigurasi.
+## 🚢 Deployment
+
+Di-deploy ke **Cloudflare Pages** sebagai static site:
+
+```bash
+mkdir -p dist
+cp index.html style.css app.js dragon.png dist/
+npx wrangler pages deploy dist --project-name vibescoderz
+```
 
 ## 📄 Lisensi
 
 MIT — lihat [LICENSE](./LICENSE).
 
 ---
+
 _Dikembangkan oleh **dezzorigin** (Nabil Aulia Dika)._

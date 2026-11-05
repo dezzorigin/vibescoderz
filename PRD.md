@@ -1,11 +1,11 @@
-# PRD — Vibescoderz
+# PRD — DragonFocus (Vibescoderz)
 
 ## 1. Informasi Proyek
 
 | Field | Nilai |
 |---|---|
-| Nama Proyek | Vibescoderz |
-| Tech Stack | Next.js |
+| Nama Proyek | DragonFocus (Vibescoderz) |
+| Tech Stack | HTML/CSS/JavaScript (vanilla) |
 | Status | Hampir selesai (beta) |
 | Penanggung Jawab | Nabil Aulia Dika |
 | Versi Dokumen | 1.0 |
@@ -13,7 +13,7 @@
 
 ## 2. Latar Belakang
 
-Proyek ini dikembangkan sebagai bagian dari portofolio dan kebutuhan operasional. Dokumen ini mengikuti standar PRD nasional agar ruang lingkup, fitur, dan kriteria keberhasilan terdefinisi dengan jelas.
+DragonFocus dikembangkan sebagai aplikasi produktivitas ringan yang menggabungkan Pomodoro Timer dan Quest Board, dapat berjalan offline tanpa backend. Dokumen ini mengikuti standar PRD nasional agar ruang lingkup, fitur, dan kriteria keberhasilan terdefinisi dengan jelas.
 
 ## 3. Masalah yang Diselesaikan
 
@@ -69,7 +69,7 @@ Struktur proyek (file/direktori utama):
 
 ## 8. Arsitektur & Tech Stack
 
-Next.js
+HTML/CSS/JavaScript (vanilla)
 
 ## 9. Milestone / Roadmap
 
